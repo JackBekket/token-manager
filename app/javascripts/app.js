@@ -1,7 +1,6 @@
 
 //TODO : CONVERT FUNCTIOS.
 //TODO : cleanup code
-//TODO : english translation for polish team
 //TODO : clean appendix
 
 
@@ -11,16 +10,17 @@ import "../stylesheets/app.css";
 // Import libraries we need.
 import { default as Web3} from 'web3';
 import { default as contract } from 'truffle-contract'
-import each from 'async/each';
+
+//import each from 'async/each';
 
 
 // Import our contract artifacts and turn them into usable abstractions.
-import token_artifacts from '../../build/contracts/SimpleToken.json'
+import token_artifacts from '../../build/contracts/BigToken.json'
 
 
-const async = require('async');
+//const async = require('async');
 
-const request = require('request-promise') ;
+//const request = require('request-promise') ;
 //var rp = request;
 // MetaCoin is our usable abstraction, which we'll use through the code below.
 var Token = contract(token_artifacts);
