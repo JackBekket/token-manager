@@ -302,6 +302,43 @@ Token.deployed().then(function(instance){
 },
 
 
+deployContract: function(){
+  var self=this;
+
+  var arbiter;
+  var freeze;
+  var fee;
+  var reward;
+//  reward=0;
+//  fee=15;
+  arbiter=$("#sellerarb1").val();
+  freeze=$("#freezp1").val();
+  fee=$("#fee1").val();
+//  reward=$("#rew1").val();
+reward=0;
+  EscrowAdvansed.new(arbiter,freeze,fee,reward,{from:accounts[0],gas:3000000}).then(function(instance) {
+
+    if(!instance.address) {
+         console.log("Contract transaction send: TransactionHash: " + instance.transactionHash + " waiting to be mined...");
+
+       } else {
+         console.log("Contract mined! Address: " + instance.address);
+         console.log(contract);
+       }
+
+//Этот адрес можно потом передавать на бекенд или куда-нибудь еще
+//   console.log(instance.address);
+
+});
+//Функция которая должна быть вызвана после размещения нового контракта.
+//event.stopWatching();
+//App.start();
+// App.sellerInvoice();
+//App.sellerCurrent();
+
+},
+
+
 // Function for auto transaction from database (proto)
 /**
 getAll: function () {
