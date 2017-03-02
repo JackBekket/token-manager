@@ -33,5 +33,13 @@
     "web3": "^0.18.2",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
+  },
+  "dependencies": {
+    "async": "^2.1.5",
+    "jquery": "^3.1.1",
+    "net": "^1.0.2",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1",
+    "tls": "0.0.1"
   }
 }

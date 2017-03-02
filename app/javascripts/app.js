@@ -263,15 +263,14 @@ Token.deployed().then(function(instance){
     console.log('val=');
      console.log(val);
   }).then(function () {
-    function(){
- msg="Чеканка";
+     msg="Чеканка";
    setStatus(msg);
    setStatusPos(pos, msg);
    self.ShowSupply();
    self.hubBalance();
  }).then(
    function (){
-    return return tok.balanceOf(to); //запрашиваем баланс ПОСЛЕ чеканки
+   return tok.balanceOf(to); //запрашиваем баланс ПОСЛЕ чеканки
 msg="Проверка";
     setStatus(msg);
     setStatusPos(pos,msg);

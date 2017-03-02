@@ -2,7 +2,6 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 var webpack = require('webpack');
 
-var FlowBabelWebpackPlugin = require('flow-babel-webpack-plugin');
 
 module.exports = {
   entry:  ['./app/javascripts/app.js'],
@@ -57,8 +56,8 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015'],
-          plugins: [new FlowBabelWebpackPlugin(),'transform-runtime']
+          presets: ['es2015']
+
         }
       }
     ]
