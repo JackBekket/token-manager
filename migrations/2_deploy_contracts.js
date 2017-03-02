@@ -4,7 +4,7 @@ var ConvertLib = artifacts.require("./ConvertLib.sol");
 var MetaCoin = artifacts.require("./MetaCoin.sol");
 **/
 
-var SimpleToken=artifacts.require("./SimpleToken.sol");
+var BigToken=artifacts.require("./BigToken.sol");
 
 module.exports = function(deployer) {
 
@@ -14,6 +14,6 @@ module.exports = function(deployer) {
   deployer.deploy(MetaCoin);
   **/
 
-  deployer.deploy(SimpleToken);
+  deployer.deploy(BigToken);
 
 };
