@@ -16,7 +16,7 @@ import "./ownership/Ownable.sol";
  *
  *  simple standard
  */
-contract BigToken is StandardToken {
+contract BigToken is StandardToken,Ownable {
 
   string public name = "BigToken";
   string public symbol = "BIG";
@@ -28,13 +28,13 @@ contract BigToken is StandardToken {
     balances[msg.sender] = INITIAL_SUPPLY;
   }
 
-/**
+
   function mintToken(address target, uint256 mintedAmount) onlyOwner {
-      balanceOf[target] += mintedAmount;
+      balances[target] += mintedAmount;
       totalSupply += mintedAmount;
       Transfer(0, owner, mintedAmount);
       Transfer(owner, target, mintedAmount);
   }
-**/
+
 
 }
