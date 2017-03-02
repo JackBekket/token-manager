@@ -82,15 +82,18 @@ window.App = {
     });
 
         //  var inst;
+        /**
           Token.deployed().then(function (inst) {
             address=inst.address;
             console.log("address");
             console.log(address);
             self.refreshAddress();
           });
+**/
+
 
 //        There must be a functions that will be work onload
-      //    self.refreshAddress();
+          self.refreshAddress();
 
         //  self.sendJSON();
   },
