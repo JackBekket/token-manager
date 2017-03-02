@@ -234,6 +234,7 @@ var msg;
 var tok;
 
 var val = $("#mint_am").val();
+val =web3.toWei(val);
 var to = $("#mint_to").val();
 
 
