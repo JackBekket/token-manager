@@ -52,12 +52,20 @@
 <br><label for="Rew promille">Reward promille<input id="rew1" maxlength="40" size="40" value=0>
 <br>
 <span id="createStatus"></span>
-<br><br><td align="right"> <button id="CreateEscr" onclick="App.deployEscrow()">New</button></td>
+<br><br><td align="right"> <button id="CreateEscr" onclick="App.deployContract()">New</button></td>
 
 
 
 
 <body>
+
+<h1>Token manager</h1>
+<div class="section">
+  <label>Введите адрес контракта токена для управления <input id="address"><br>
+    <button id='adr' onclick="App.startManager()">Ввод!</button><br>
+    <hr>
+
+
   <h1>SimpleToken Bank</h1>
   <div class="section">
     Контракт размещен на: <div id="tokdAddress"></div>

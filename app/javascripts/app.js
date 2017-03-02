@@ -36,6 +36,7 @@ var accounts;
 var account;
 var event
 
+var address;
 
 var balance;
 // var tokend;
@@ -80,11 +81,16 @@ window.App = {
 
     });
 
-
-
+        //  var inst;
+          Token.deployed().then(function (inst) {
+            address=inst.address;
+            console.log("address");
+            console.log(address);
+            self.refreshAddress();
+          });
 
 //        There must be a functions that will be work onload
-          self.refreshAddress();
+      //    self.refreshAddress();
 
         //  self.sendJSON();
   },
@@ -103,8 +109,10 @@ refreshAddress: function () {
   var self=this;
   var instance;
   var tok;
-  Token.deployed().then(function(instance) {
+  console.log("refresh init");
+  Token.at(address).then(function(instance) {
     tok=instance;
+    console.log(tok);
     $("#tokdAddress").html(tok.address);
     console.log(tok.address);
     self.ShowSupply();
@@ -118,7 +126,7 @@ refreshAddress: function () {
     var instance;
     var msg;
     var tok;
-    Token.deployed().then(function(instance){
+    Token.at(address).then(function(instance){
       tok=instance;
       msg="Wait..";
       self.setStatusPos(pos,msg);
@@ -141,7 +149,7 @@ hubBalance: function () {
   var instance;
   var msg;
   var tok;
-  Token.deployed().then(function(instance){
+  Token.at(address).then(function(instance){
     tok=instance;
     msg="Wait..";
     self.setStatusPos(pos,msg);
@@ -171,7 +179,7 @@ sendToken: function () {
 //  to=web3.toWei(val);
 
 
-  Token.deployed().then(function(instance){
+  Token.at(address).then(function(instance){
     tok=instance;
     msg="Wait..";
     /**
@@ -205,7 +213,7 @@ sendTokVal: function (to,val) {
 //  to=web3.toWei(val);
 
 
-  Token.deployed().then(function(instance){
+  Token.at(address).then(function(instance){
     tok=instance;
 //    msg="Wait..";
 
@@ -244,7 +252,7 @@ msg="Инициализация, ждите";
 self.setStatusPos(pos, msg);
 var cb;  // cb - баланс до чеканки
 
-Token.deployed().then(function(instance){
+Token.at(address).then(function(instance){
   tok=instance;
 //    msg="Wait..";
   //запрашиваем баланс до чеканки
@@ -305,6 +313,7 @@ Token.deployed().then(function(instance){
 deployContract: function(){
   var self=this;
 
+/**
   var arbiter;
   var freeze;
   var fee;
@@ -316,7 +325,8 @@ deployContract: function(){
   fee=$("#fee1").val();
 //  reward=$("#rew1").val();
 reward=0;
-  EscrowAdvansed.new(arbiter,freeze,fee,reward,{from:accounts[0],gas:3000000}).then(function(instance) {
+**/
+  Token.new({from:accounts[0],gas:3000000}).then(function(instance) {
 
     if(!instance.address) {
          console.log("Contract transaction send: TransactionHash: " + instance.transactionHash + " waiting to be mined...");
@@ -327,7 +337,7 @@ reward=0;
        }
 
 //Этот адрес можно потом передавать на бекенд или куда-нибудь еще
-//   console.log(instance.address);
+   console.log(instance.address);
 
 });
 //Функция которая должна быть вызвана после размещения нового контракта.
@@ -337,6 +347,20 @@ reward=0;
 //App.sellerCurrent();
 
 },
+
+startManager: function () {
+  var self=this;
+
+  var instance;
+  var msg;
+  var tok;
+
+  var val = $("#address").val();
+  address = val;
+
+  self.start();
+},
+
 
 
 // Function for auto transaction from database (proto)
@@ -563,240 +587,3 @@ window.addEventListener('load', function() {
 
   App.start();
 });
-
-// old dummy:
-
-
-/**
-
-window.onload = function() {
-
-
-
-
-
-    //Get address
-      var token = MyAdvancedToken.at(MyAdvancedToken.deployed_address);
-
-
-    //Set adress of deployed contract
-    $("#tokdAddress").html(MyAdvancedToken.deployed_address);
-    //Creating instance
-     myTokenInstance=token;
-
-console.log(myTokenInstance);
-
-
-//Set deci
-deci=18;
-
-//Set rules of transform numbers
-DeciPow(deci);
-
-    //Check Values
-  //  checkValues();
-
-    //Check Total Supply
-    totalSup();
-
-   //refresh Balance
-    refreshBalance();
-
-
-
-
-//deci = myTokenInstance.decimals.call();
-//deci=myTokenInstance.getDecimals.call();
-//console.log('decimals:');
-//console.log(deci);
-
-   });
-//
-
-
-
-
-    //Warmig up UI
-    $("#transfer").click(function() {
-    		var val = $("#transfer_am").val();
-        val=transformIn(val);
-    //    console.log("transfer_val:");
-    //    console.log(val);
-    		var to = $("#transfer_to").val();
-    		sendCoin(to, val);
-    	});
-
-//
-
-
-
-
-//  var tokenDecl=
-// function(token) {
-//    console.log(token);
-//      myTokenInstance = token;
-  //    checkValues();
-//  };
-//  myTokenInstance = tokenDecl(token);
-//  console.log(myTokenInstance);
-//  tokenDecl(token);
-
-  };
-
-function setStatus(message) {
-//  var status = document.getElementById("status");
-//  status.innerHTML = message;
-  $("#status").html(message);
-};
-
-function setStatusPos(pos, msg){
-$(pos).html(msg);
-
-};
-
-function checkValues() {
-  myTokenInstance.owner.call().then(
-
-    function(organizer) {
-      $("input#tokdOrganizer").val(organizer);
-      return myTokenInstance.getBalance.call(account, {from: account});
-  //    return myTokenInstance.numRegistrants.call();
-  })
-     .then(
-       function(bal) {
-         var be=bal.valueOf();
-         $("#balance").html(be);
-         return myTokenInstance.owner.call();
-
-       });
-}
-
-function refreshBalance(){
-
- myTokenInstance.getBalance.call(account, {from: account}).then(function(value) {
-   // be = balance_element
-var be=value.valueOf();
-//console.log("be:");
-//console.log(be);
-var be_val;
-be_val=transformOut(be);
-//console.log("be_val");
-//.log(be_val);
-
-// senderWei=web3.toWei(be);
-//console.log('balance:');
-//console.log(be);
-$("#balance").html(be_val);
-//console.log(value);
-//console.log(be);
-}).catch(function(e){
-console.log(e);
-setStatus("Error getting balance; see log.");
-
-});
-}
-
-function difBalance(nacc, numa){
-  myTokenInstance.getBalance.call(nacc, {from: account}).then(function(value) {
-    // be = balance_element
- var be=value.valueOf();
-
-
- $(numa).html(be);
- //console.log(value);
- //console.log(be);
- }).catch(function(e){
- console.log(e);
- setStatus("Error getting balance; see log.");
-
- });
-}
-
-
-
-function totalSup(){
-var msg="Инициализация";
-var pos="#totalSup";
-setStatusPos(msg, pos);
-return myTokenInstance.totalSupply.call().then(
-function (sup){
-  val=sup.valueOf();
-  msg=transformOut(val);
-//msg=sup;
-//console.log(sup);
-//console.log(msg);
-setStatusPos(pos, msg);
-
-});
-
-}
-
-//Power to Decimals!
-function DeciPow(deci) {
-   mroot=Math.pow(10,deci);
-   return mroot;
-
-}
-
-
-
-// to Wei
-function transformIn(val) {
-val=val*mroot;
-//console.log("In:");
-//console.log(val);
-return val;
-
-
-}
-
-//from Wei
-function transformOut(val) {
-
-  // var am_prime=val;
-   val=val/mroot;
-//console.log("Out:");
-//.log(val);
-   return val;
-
-
-}
-
-
- function sendCoin(to, val) {
-//  var meta = MetaCoin.deployed();
-
-
-//console.log(to);
-//console.log(val);
-
-var msg;
-var pos = "#transfer_result";
-var msg_transfer;
-setStatus("Initiating transaction... (please wait)");
-// msg_transfer="Инициализация (пожалуйста,подождите)";
-// $("#transfer_result").html(msg_transfer);
-msg="Инициализация (пожалуйста,подождите)";
-setStatusPos(pos,msg);
-// getBalSenderWei();
-//getBalRecipientWei(to);
-myTokenInstance.transfer(to, val, { from: account}).then(
-  function (){
-   setStatus("Transaction complete!");
-
-  // msg_transfer="Транзакция выполнена";
-  // $("#transfer_result").html(msg_transfer);
-  msg="Транзакция выполнена";
-  setStatusPos(pos,msg);
-   refreshBalance();
- }).catch(function(e) {
-     console.log(e);
-     setStatus("Error sending coin; see log.");
-    // msg_transfer="Ошибка при отправке, смотри консоль";
-    // $("#transfer_result").html(msg_transfer);
-    msg="Ошибка при отправке, смотри консоль";
-    setStatusPos(pos,msg);
-   });
-  }
-
-**/
