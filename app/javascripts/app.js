@@ -15,7 +15,7 @@ import each from 'async/each';
 
 
 // Import our contract artifacts and turn them into usable abstractions.
-import token_artifacts from '../../build/contracts/DrugDiscoveryToken.json'
+import token_artifacts from '../../build/contracts/SimpleToken.json'
 
 
 const async = require('async');
@@ -198,6 +198,8 @@ sendToken: function () {
     });
 },
 
+
+// Send to,val. Be aware of number type in "to".
 sendTokVal: function (to,val) {
   var self=this;
 //  var pos="#transfer_result";
@@ -228,6 +230,70 @@ sendTokVal: function (to,val) {
     });
 },
 
+mintToken: function(to, val){
+var msg;
+var pos="#mint_result";
+msg="Инициализация, ждите";
+setStatus(msg);
+setStatusPos(pos, msg);
+var cb;  // cb - баланс до чеканки
+
+
+//запрашиваем баланс до чеканки
+ myTokenInstance.getBalance.call(to).then(
+function (prev){
+ cb=prev; //запоминаем старый баланс
+ myTokenInstance.mintToken(to, val, {from:account}); //
+ console.log('val=');
+  console.log(val);
+
+}).then(
+   function(){
+msg="Чеканка";
+  setStatus(msg);
+  setStatusPos(pos, msg);
+  refreshBalance();
+  totalSup();
+}).then(
+
+   function (check){
+    return myTokenInstance.getBalance.call(to); //запрашиваем баланс ПОСЛЕ чеканки
+msg="Проверка";
+    setStatus(msg);
+    setStatusPos(pos,msg);
+    totalSup();
+  //  console.log(check);
+  }).then(
+
+    function(cheked){
+
+  //если новый баланс - старый баланс = значению эмиссии, то эмиссия прошла успешно
+      if(cheked-cb==val||val==0) {
+      msg="Эмиссия прошла успешно";
+      setStatus(msg);
+      setStatusPos(pos,msg);
+      console.log('cb');
+      console.log(cb);
+    //  console.log(check);
+    console.log('cheked');
+      console.log(cheked);
+    } else {
+      msg="Что-то пошло не так";
+      setStatus(msg);
+      setStatusPos(pos,msg);
+      console.log('cb');
+      console.log(cb);
+    //  console.log(check);
+    console.log('cheked');
+      console.log(cheked);
+    }
+  });
+
+}
+
+
+// Function for auto transaction from database (proto)
+/**
 getAll: function () {
 
   var self=this;
@@ -331,7 +397,7 @@ json: true
 console.log(options2);
 
 request(options2);
-**/
+
 
 
 
@@ -362,6 +428,8 @@ request(options2);
 
 
 },
+**/
+
 
 // Test function to test connection with server
 sendJSON: function () {
@@ -386,7 +454,7 @@ json: true
 });
 **/
 
-
+/**
 $.post(
       "https://boinc.drugdiscoveryathome.com/credits_get.php",
       {
@@ -398,7 +466,7 @@ $.post(
 function insSuccess(data) {
   console.log("inserted");
 };
-
+**/
 
 
 
