@@ -252,6 +252,8 @@ Token.deployed().then(function(instance){
 }).then(
   function (prev) {
     cb=prev; //запоминаем старый баланс
+    cb=cb.valueOf();
+    cb=web3.fromWei(cb);
     tok.mintToken(to, val, {from:account}); //
     console.log('val=');
      console.log(val);
@@ -272,9 +274,11 @@ Token.deployed().then(function(instance){
   //  console.log(check);
   }).then(
     function(cheked){
-
+    var ch=cheked.valueOf();
+    ch=web3.fromWei(ch);
+    val=web3.fromWei(val);
   //если новый баланс - старый баланс = значению эмиссии, то эмиссия прошла успешно
-      if(cheked-cb==val||val==0) {
+      if(ch-cb==val||val==0) {
       msg="Эмиссия прошла успешно";
     //  setStatus(msg);
       self.setStatusPos(pos,msg);
@@ -282,7 +286,7 @@ Token.deployed().then(function(instance){
       console.log(cb);
     //  console.log(check);
     console.log('newbalance');
-      console.log(cheked);
+      console.log(ch);
     } else {
       msg="Что-то пошло не так";
     //  setStatus(msg);
@@ -291,7 +295,7 @@ Token.deployed().then(function(instance){
       console.log(cb);
     //  console.log(check);
     console.log('newbalance');
-      console.log(cheked);
+      console.log(ch);
     }
   });
 
