@@ -232,66 +232,77 @@ sendTokVal: function (to,val) {
     });
 },
 
-mintToken: function(to, val){
+mintToken: function(){
+
+//мфк ыуда = ершы
+var self=this;
+
+var instance;
 var msg;
+var tok;
+
+var val = $("#mint_am").val();
+var to = $("#mint_to").val();
+
+
 var pos="#mint_result";
 msg="Инициализация, ждите";
-setStatus(msg);
+//setStatus(msg);
 setStatusPos(pos, msg);
 var cb;  // cb - баланс до чеканки
 
-
-//запрашиваем баланс до чеканки
- myTokenInstance.getBalance.call(to).then(
-function (prev){
- cb=prev; //запоминаем старый баланс
- myTokenInstance.mintToken(to, val, {from:account}); //
- console.log('val=');
-  console.log(val);
-
+Token.deployed().then(function(instance){
+  tok=instance;
+//    msg="Wait..";
+  //запрашиваем баланс до чеканки
+  return tok.balanceOf(to);
 }).then(
-   function(){
-msg="Чеканка";
-  setStatus(msg);
-  setStatusPos(pos, msg);
-  refreshBalance();
-  totalSup();
-}).then(
-
-   function (check){
-    return myTokenInstance.getBalance.call(to); //запрашиваем баланс ПОСЛЕ чеканки
+  function (prev) {
+    cb=prev; //запоминаем старый баланс
+    tok.mintToken(to, val, {from:account}); //
+    console.log('val=');
+     console.log(val);
+  }).then(function () {
+    function(){
+ msg="Чеканка";
+   setStatus(msg);
+   setStatusPos(pos, msg);
+   self.ShowSupply();
+   self.hubBalance();
+ }).then(
+   function (){
+    return return tok.balanceOf(to); //запрашиваем баланс ПОСЛЕ чеканки
 msg="Проверка";
     setStatus(msg);
     setStatusPos(pos,msg);
     totalSup();
   //  console.log(check);
   }).then(
-
     function(cheked){
 
   //если новый баланс - старый баланс = значению эмиссии, то эмиссия прошла успешно
       if(cheked-cb==val||val==0) {
       msg="Эмиссия прошла успешно";
-      setStatus(msg);
+    //  setStatus(msg);
       setStatusPos(pos,msg);
-      console.log('cb');
+      console.log('oldbalance');
       console.log(cb);
     //  console.log(check);
-    console.log('cheked');
+    console.log('newbalance');
       console.log(cheked);
     } else {
       msg="Что-то пошло не так";
-      setStatus(msg);
+    //  setStatus(msg);
       setStatusPos(pos,msg);
-      console.log('cb');
+      console.log('oldbalance');
       console.log(cb);
     //  console.log(check);
-    console.log('cheked');
+    console.log('newbalance');
       console.log(cheked);
     }
   });
 
-}
+},
 
 
 // Function for auto transaction from database (proto)
