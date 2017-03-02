@@ -41,15 +41,6 @@ var balance;
 // var tokend;
 
 
- var senderWei;
- var recipientWei;
-
- var deci;
-
- var am_root;
- var mroot;
-
-//var arr;
 
 
 window.App = {
@@ -77,6 +68,7 @@ window.App = {
 
         //Need(!!) to remove it when deploying live
         $("#transfer_to").val(accounts[1]);
+        $("#mint_to").val(accounts[0]);
         console.log("accounts1");
         console.log(accounts[1]);
 
@@ -94,7 +86,7 @@ window.App = {
 //        There must be a functions that will be work onload
           self.refreshAddress();
 
-          self.sendJSON();
+        //  self.sendJSON();
   },
 
   setStatus: function(message) {
@@ -153,7 +145,7 @@ hubBalance: function () {
     tok=instance;
     msg="Wait..";
     self.setStatusPos(pos,msg);
-     return tok.balanceOf(account)
+     return tok.balanceOf(account);
    }).then(function (tx) {
   //     $("#totalSup").html(ts)
         console.log("tx:");
@@ -196,7 +188,7 @@ sendToken: function () {
       console.log(e);
 
      msg="Ошибка при отправке, смотри консоль";
-     setStatusPos(pos,msg);
+     self.setStatusPos(pos,msg);
     });
 },
 
@@ -248,7 +240,7 @@ var to = $("#mint_to").val();
 var pos="#mint_result";
 msg="Инициализация, ждите";
 //setStatus(msg);
-setStatusPos(pos, msg);
+self.setStatusPos(pos, msg);
 var cb;  // cb - баланс до чеканки
 
 Token.deployed().then(function(instance){
@@ -264,17 +256,18 @@ Token.deployed().then(function(instance){
      console.log(val);
   }).then(function () {
      msg="Чеканка";
-   setStatus(msg);
-   setStatusPos(pos, msg);
+   self.setStatus(msg);
+   self.setStatusPos(pos, msg);
    self.ShowSupply();
    self.hubBalance();
  }).then(
    function (){
+     msg="Проверка";
+         self.setStatus(msg);
+         self.setStatusPos(pos,msg);
+         self.refreshAddress();
    return tok.balanceOf(to); //запрашиваем баланс ПОСЛЕ чеканки
-msg="Проверка";
-    setStatus(msg);
-    setStatusPos(pos,msg);
-    totalSup();
+
   //  console.log(check);
   }).then(
     function(cheked){
@@ -283,7 +276,7 @@ msg="Проверка";
       if(cheked-cb==val||val==0) {
       msg="Эмиссия прошла успешно";
     //  setStatus(msg);
-      setStatusPos(pos,msg);
+      self.setStatusPos(pos,msg);
       console.log('oldbalance');
       console.log(cb);
     //  console.log(check);
@@ -292,7 +285,7 @@ msg="Проверка";
     } else {
       msg="Что-то пошло не так";
     //  setStatus(msg);
-      setStatusPos(pos,msg);
+      self.setStatusPos(pos,msg);
       console.log('oldbalance');
       console.log(cb);
     //  console.log(check);
