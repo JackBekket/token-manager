@@ -15,7 +15,9 @@ import { default as contract } from 'truffle-contract'
 
 
 // Import our contract artifacts and turn them into usable abstractions.
-import token_artifacts from '../../build/contracts/BigToken.json'
+//import token_artifacts from '../../build/contracts/BigToken.json'
+//import constructor_artifacts from '../../build/contracts/TokenConstructor.json'
+import token_artifacts from '../../build/contracts/TokenConstructor.json'
 
 
 //const async = require('async');
@@ -75,7 +77,6 @@ window.App = {
 
 
 
-  //    self.refreshBalance();
 
 
 
@@ -120,6 +121,10 @@ refreshAddress: function () {
     console.log(tok.address);
     self.ShowSupply();
     self.hubBalance();
+    return tok.symbol.call();
+  }).then(function (sym) {
+    $("#t_sym1").html(sym);
+    console.log(sym);
   });
 },
 
@@ -316,20 +321,14 @@ Token.at(address).then(function(instance){
 deployContract: function(){
   var self=this;
 
-/**
-  var arbiter;
-  var freeze;
-  var fee;
-  var reward;
-//  reward=0;
-//  fee=15;
-  arbiter=$("#sellerarb1").val();
-  freeze=$("#freezp1").val();
-  fee=$("#fee1").val();
-//  reward=$("#rew1").val();
-reward=0;
-**/
-  Token.new({from:accounts[0],gas:3000000}).then(function(instance) {
+  var name=$("#t_name").val();
+  var sym=$("#t_sym").val();
+  var val=$("#t_val").val();
+  val=Number(val);
+  var dec=18;
+
+
+  Token.new(val,name,dec,sym,{from:accounts[0],gas:3000000}).then(function(instance) {
 
     if(!instance.address) {
          console.log("Contract transaction send: TransactionHash: " + instance.transactionHash + " waiting to be mined...");

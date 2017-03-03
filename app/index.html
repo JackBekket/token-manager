@@ -42,6 +42,9 @@
 <hr>
 <p> Здесь располагается секция создания новых токенов </p>
 <br>
+<label>Имя токена<input type="text" id="t_name" value="BigToken" /> <br>
+  <label>Symbol<input type="text" id="t_sym" value="BFG" /> <br>
+    <label>INITIAL_SUPPLY<input type="text" id="t_val" value="10000" /> <br>
 
 <span id="createStatus"></span>
 <br><br><td align="right"> <button id="CreateEscr" onclick="App.deployContract()">New</button></td>
@@ -76,7 +79,7 @@
        <h2><center>General Info</center></h2>
        <hr/></br>
        <h2><center>How much have been emited ever  </center></h2> </br>
-     <h3> <span id="totalSup"></span>  BFG</h3></br>
+     <h3> <span id="totalSup"></span><span id="t_sym1"></span></h3></br>
 
 
 
@@ -89,7 +92,7 @@
      <h2>Balance</h2>
      <hr/>
    </br>
-   <h3>У вас  <span id="balance"></span>  <span id="t_name">BFG</span></h3>
+   <h3>У вас  <span id="balance"></span>  <span id="t_sym1"></span></h3>
    <hr/>
    </div>
    <hr/>
