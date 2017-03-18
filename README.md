@@ -15,3 +15,10 @@ Token Manager application is written as node.js/react app and implement all necc
 1. Construcing new tokens and deploy it in current network.
 2. Provide all standard ERC20 functions such as balance check, transfer, approval, etc..
 3. Creator of pie can issue more tokens throught emission function.
+
+![Settings Window](https://github.com/JackBekket/token-manager/blob/master/Scrinshots/transfer.gif)
+
+![Settings Window](https://github.com/JackBekket/token-manager/blob/master/Scrinshots/mint.gif)
+
+
+
