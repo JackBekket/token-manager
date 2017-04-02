@@ -20,5 +20,4 @@ Token Manager application is written as node.js/react app and implement all necc
 
 ![Settings Window](https://github.com/JackBekket/token-manager/blob/master/Scrinshots/mint.gif)
 
-
-
+![Settings Window](https://github.com/JackBekket/token-manager/blob/master/Scrinshots/waaagh.gif)
