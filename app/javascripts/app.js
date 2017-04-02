@@ -317,6 +317,37 @@ Token.at(address).then(function(instance){
 
 },
 
+burnTokens: function () {
+  var self=this;
+  var val=$("#burn_am").val();
+  val=Number(val);
+  
+
+  var msg;
+  var tok;
+
+
+
+  Token.at(address).then(function(instance){
+    tok=instance;
+//    msg="Wait..";
+
+     return tok.burnTokens(val,{from: account})
+   }).then(function (tx) {
+        console.log("tx:");
+        console.log(tx);
+    //    msg="Transaction complete";
+    //    self.setStatusPos(pos,msg);
+          self.refreshAddress();
+  }).catch(function(e) {
+      console.log(e);
+
+  //   msg="Ошибка при отправке, смотри консоль";
+  //   setStatusPos(pos,msg);
+    });
+
+},
+
 
 deployContract: function(){
   var self=this;
@@ -365,204 +396,6 @@ startManager: function () {
 
 
 
-// Function for auto transaction from database (proto)
-/**
-getAll: function () {
-
-  var self=this;
-  var pos="#AllResult";
-  var instance;
-  var msg="getting data..";
-  var tok;
-
-  self.setStatusPos(pos,msg);
-
-//
-  const options = {
-    method: 'GET',
-    uri: 'https://boinc.drugdiscoveryathome.com/credits.php?appid=7&key=jjkcsd780987dschuds87'
-  };
-  console.log(options);
-
-
-
-  request(options)
-    .then(function (data) {
-      // Request was successful, use the response object at will
-      console.log(data);
-    var res;
-    res=JSON.parse(data);
-    console.log(res);
-    console.log(res.Jobs);
-    var obj_name = res.Jobs;
-    var arr
-    arr=obj_name.object_name;
-      msg="parsing...";
-     self.setStatusPos(pos,msg);
-
-     var count=0;
-
-     async.forEach(arr, function (item, callback){
-  //  console.log(item); // print the key
-//  console.log("credits");
-//  console.log(item.granted_credit);
-  var gc=item.granted_credit;
-  var address=item.address;
-  var amnt=gc/1000;
-//  console.log("amount in ether");
-//  console.log(amnt);
-  amnt=web3.toWei(amnt);
-//  console.log("amount in wei:");
-
-//  console.log(amnt);
-
-//  console.log("amount in int wei");
-  amnt=parseInt(amnt,10);
-//  console.log(amnt);
-//  console.log(address);
-msg="transaction sending..";
-self.setStatusPos(pos,msg);
-  self.sendTokVal(address,amnt);
-
-var id=item.id;
-//console.log("id:");
-//console.log(id);
-var wid=item.workunitid;
-//console.log("wid");
-var hostid=item.hostid;
-//console.log("hostid");
-//console.log(hostid);
-var ampaid=amnt;
-ampaid=web3.fromWei(ampaid);
-//console.log("ampaid");
-//console.log(ampaid);
-
-$.post(
-      "https://boinc.drugdiscoveryathome.com/credits_get.php",
-      {
-        id:id,
-        workunitid:wid,
-        hostid:hostid,
-        amount_paid:ampaid
-      },
-      insSuccess
-      );
-
-function insSuccess(data) {
-  console.log("inserted");
-  console.log(data);
-};
-/**
-const options2 = {
-  method: 'POST',
-  uri: 'https://boinc.drugdiscoveryathome.com/credits_get.php',
-  body: {
-  id:id,
-  workunitid:wid,
-  hostid:hostid,
-  amount_paid:ampaid,
-  hello:'privet'
-
-},
-json: true
-  };
-//};
-console.log(options2);
-
-request(options2);
-
-
-
-
-    count++;
-
-    // tell async that that particular element of the iterator is done
-    if(arr.length == count) callback();
-
-
-
-
-}, function(err) {
-    console.log('iterating done');
-
-})
-}).then(function () {
-
-  msg='processing, see console..';
-  self.setStatusPos(pos,msg)
-
-   }).catch(function (err) {
-      // Something bad happened, handle the error
-      console.log(err);
-    })
-
-
-
-
-
-},
-**/
-
-
-// Test function to test connection with server
-sendJSON: function () {
-
-
-
-
-/**
-  const options = {
-    method: 'POST',
-    uri: 'https://boinc.drugdiscoveryathome.com/credits_get.php',
-    body: {
-  foo: 'bar',
-  hello:'privet'
-},
-json: true
-  };
-  console.log(options);
-
-  request(options).then(function (data) {
-
-});
-**/
-
-/**
-$.post(
-      "https://boinc.drugdiscoveryathome.com/credits_get.php",
-      {
-        foo:'hello'
-      },
-      insSuccess
-      );
-
-function insSuccess(data) {
-  console.log("inserted");
-};
-**/
-
-
-
-/**
-$.post(
-      "/proxy.php",
-      {
-        csurl:'https://boinc.drugdiscoveryathome.com/credits_get.php',
-        id:'1',
-        workunitid:'1',
-        hostid:'1',
-        amount_paid:'0'
-      },
-      insSuccess
-      );
-
-function insSuccess(data) {
-  console.log("inserted");
-  console.log(data);
-};
-**/
-
-}
 
 
 
