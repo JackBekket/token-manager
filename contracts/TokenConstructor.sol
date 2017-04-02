@@ -18,11 +18,19 @@ import "./ownership/Ownable.sol";
  */
 contract TokenConstructor is StandardToken,Ownable {
 
+
+  //Constants
   string public name;
   string public symbol;
   uint public decimals;
   uint public INITIAL_SUPPLY;
 
+
+  //events
+  event LogBurn(address indexed owner, uint indexed value);
+
+
+//Constructor
   function TokenConstructor(
     uint256 initialSupply,
   string tokenName,
@@ -44,5 +52,18 @@ contract TokenConstructor is StandardToken,Ownable {
       Transfer(owner, target, mintedAmount);
   }
 
+  function burnTokens(uint value) public
+      onlyOwner
+  {
+
+
+      if(value == 0) throw;
+      if (balances[msg.sender]<value) throw;
+      balances[msg.sender] -= value;
+      totalSupply -= value;
+      LogBurn(msg.sender, value);
+
+
+  }
 
 }
