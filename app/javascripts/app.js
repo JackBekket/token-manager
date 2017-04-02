@@ -321,7 +321,7 @@ burnTokens: function () {
   var self=this;
   var val=$("#burn_am").val();
   val=Number(val);
-  
+  val = web3.toWei(val);
 
   var msg;
   var tok;
