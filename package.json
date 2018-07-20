@@ -1,6 +1,6 @@
 {
   "name": "token-manager-bigfund",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "scripts": {
     "lint": "eslint ./",
@@ -29,8 +29,8 @@
     "html-webpack-plugin": "^2.28.0",
     "json-loader": "^0.5.4",
     "style-loader": "^0.13.1",
-    "truffle-contract": "^1.1.6",
-    "web3": "^0.18.2",
+    "truffle-contract": "^1.1.11",
+    "web3": "^0.20.0",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
   },
