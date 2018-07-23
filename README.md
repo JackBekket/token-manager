@@ -1,3 +1,6 @@
+## Status
+New version will be here - https://github.com/JackBekket/Token-Factory
+
 # Token Manager
 
 This is project for Big-Fund Token manager system.
